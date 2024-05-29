@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "competitor-analysis-bot"
+version = "0.0.1"
+description = "LangGraph agent that does competitive analysis for you."
+authors = ["William Fu-Hinthorn <13333726+hinthornw@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+langgraph = "0.0.55"
+langchain-anthropic = "0.1.13"
+bs4 = "^0.0.2"
+langchain-community = "^0.2.1"
+langchain-openai = "^0.1.7"
+tavily-python = "^0.3.3"
+
+[tool.poetry.group.dev.dependencies]
+black = "24.4.2"
+mypy = "^1.10.0"
+ruff = "^0.4.6"
+isort = "^5.13.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

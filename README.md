@@ -1,0 +1,3 @@
+# Competitor Analysis Bot
+
+TODO
