@@ -8,7 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-langgraph = "0.0.55"
+langgraph = "^0.0.60"
 langchain-anthropic = "0.1.13"
 bs4 = "^0.0.2"
 langchain-community = "^0.2.1"
@@ -20,6 +20,8 @@ black = "24.4.2"
 mypy = "^1.10.0"
 ruff = "^0.4.6"
 isort = "^5.13.2"
+langgraph-cli = "^0.1.35"
+langgraph-sdk = "^0.1.16"
 
 [build-system]
 requires = ["poetry-core"]
