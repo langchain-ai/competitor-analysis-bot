@@ -1,4 +1,6 @@
-"""### UX:
+"""# Competitor Analysis Bot
+
+Overall design:
 
 - Input:
     - Expected: URL for a  product
@@ -50,21 +52,17 @@ Nodes (verbs):
 - Expand search (for each competing product, do the same search so you can include competitors of competitors in your list)."""
 
 import asyncio
-from typing import Annotated, Dict, List, Optional
+from typing import Annotated, List, Optional
 
 from bs4 import BeautifulSoup as Soup
-from langchain_anthropic import ChatAnthropic
 from langchain_community.document_loaders.recursive_url_loader import RecursiveUrlLoader
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_core.documents import Document
-from langchain_core.messages import AIMessage, BaseMessage, HumanMessage, ToolMessage
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.pydantic_v1 import AnyUrl, BaseModel, Field, validator
 from langchain_core.runnables import RunnableConfig, RunnableLambda
 from langchain_openai import ChatOpenAI
-from langgraph.checkpoint import MemorySaver
 from langgraph.graph import END, START, StateGraph
-from langgraph.graph.message import add_messages
 from typing_extensions import TypedDict
 
 
@@ -231,7 +229,6 @@ class ResearchState(TypedDict, total=False):
     competitors: Annotated[List[Competitor | ProductInfo], lambda x, y: y if y else x]
     suggested_experiments: List[str]
     cpm: CPM
-    # messages: Annotated[List[BaseMessage], add_messages]
 
 
 def _format_doc(doc: Document) -> str:
@@ -488,9 +485,7 @@ graph_builder.add_edge("research_competitor", "generate_cpm")
 graph_builder.add_edge("prioritize_experiments", END)
 graph_builder.add_edge("generate_cpm", END)
 
-graph = graph_builder.compile(
-    checkpointer=MemorySaver(),  # interrupt_after=["get_competitors"]
-)
+graph = graph_builder.compile()
 
 
 # Initialize the research process
@@ -511,4 +506,5 @@ async def main():
     print(final_state["cpm"].as_markdown())
 
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
